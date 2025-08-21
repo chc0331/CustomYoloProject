@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 
-class LayoutCanavs:
+class LayoutCanvas:
     def __init__(self, img_size=512, max_layout_depth=3):
         self.img_size = img_size
         self.max_layout_depth = max_layout_depth

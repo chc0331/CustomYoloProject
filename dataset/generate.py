@@ -2,7 +2,7 @@ import os
 
 import cv2
 
-from dataset.canvas import LayoutCanavs
+from dataset.canvas import LayoutCanvas
 
 
 class DatasetGenerator:
@@ -20,7 +20,7 @@ class DatasetGenerator:
     # ----------------------------
     def generate_dataset(self):
         for i in range(self.dataset_count):
-            canvas = LayoutCanavs()
+            canvas = LayoutCanvas()
             img_path = os.path.join(self.img_dir, f"sample_{i}.png")
             label_path = os.path.join(self.label_dir, f"sample_{i}.txt")
             image, labels = canvas.draw()
