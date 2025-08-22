@@ -2,7 +2,7 @@ import os
 
 import cv2
 
-from dataset.canvas import LayoutCanvas
+from dataset.canvas.layout_canvas import LayoutCanvas
 
 
 class DatasetGenerator:
