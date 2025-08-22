@@ -27,7 +27,7 @@ def clamp_rect(x, y, w, h, img_size):
 def random_color():
     return tuple(random.randint(50, 220) for _ in range(3))
 
-def yolo_label(cls_idx, x, y, w, h, img_size):
+def ui_label(cls_idx, x, y, w, h, img_size):
     xc = (x + w / 2) / img_size
     yc = (y + h / 2) / img_size
     nw = w / img_size
@@ -55,4 +55,4 @@ class UIComponentBase:
         raise NotImplementedError
 
     def label(self, img_size):
-        return yolo_label(self.cls_idx, self.x, self.y, self.w, self.h, img_size)
+        return ui_label(self.cls_idx, self.x, self.y, self.w, self.h, img_size)

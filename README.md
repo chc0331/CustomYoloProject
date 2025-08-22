@@ -22,6 +22,32 @@ ex) 1to2Horizontal에서는 2개의 컴포넌트가 1 / 2영역에 각각 들어
 -> PNG 파일로 만들것.
 -> 다른 UI 컴포넌트는 다른 색을 가질것.
 -> Button / Icon은 Width/Height 1:1 비율로 만들어줘(레이아웃을 full로 채울때 작은 값 기준으로 설정해줘)
--> Text는 주어진 크기에 맞게 텍스트 내용이 들어간다. 
+
+-> 데이터셋 정보
+3-1. 레이아웃 GUI (png)
+3-2. 레이아웃 정보 (라벨)
+- 클래스 / int / 어떤 UI or Layout 컴포넌트인지
+- 타입 / str / Layout 또는 UI
+- 위치 / (x_center, y_center) / 중앙 좌표 (픽셀 -> 정규화)
+- 크기 / (width, height) / 너비, 높이 (픽셀 -> 정규화)
+- Depth / int / 레이아웃 중첩 수준
+- Parent id / int / 상위 레이아웃 id
+- Component id / int / 각 컴포넌트 별 고유 id
+
+# class_id x_center y_center width height depth parent_id component_id type
+# 1. class_id : int (버튼, 텍스트뷰 등 UI 클래스)
+# 2. x_center y_center width height : float (정규화 좌표)
+# 3. depth : int (중첩 레벨, 루트=0)
+# 4. parent_id : int (상위 레이아웃 id, 최상위면 -1)
+# 5. component_id : int (컴포넌트 고유 id)
+# 6. type : str (Layout 또는 UI)
+# 예시)
+# 0 0.45 0.30 0.20 0.10 1 1 101 UI
+# 1 0.50 0.50 0.90 0.90 0 -1 100 Layout
+# 2 0.70 0.60 0.25 0.15 2 101 102 UI
+
+# 방향
+# 1) YOLO-style로 좌표/클래스 라벨 저장 (Detection 학습용)
+# 2) JSON Tree로 계층 정보 저장 (Code Reconstruction 학습용)
 
 4. **Yolo-lite 모델 직접 구현하기**

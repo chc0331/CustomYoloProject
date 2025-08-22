@@ -5,7 +5,7 @@ import cv2
 from dataset.canvas.component.button import ButtonComponent
 from dataset.canvas.component.icon import IconComponent
 from dataset.canvas.component.text import TextComponent
-from dataset.canvas.component.ui_component_base import clamp_rect, yolo_label, UIComponentBase, CLASSES
+from dataset.canvas.component.ui_component_base import clamp_rect, UIComponentBase, CLASSES, ui_label
 
 
 # =========================
@@ -68,7 +68,7 @@ class LayoutComponent(UIComponentBase):
         return clamp_rect(x + pad_x, y + pad_y, w - 2 * pad_x, h - 2 * pad_y, self.img_size)
 
     def label(self, img_size):
-        labels = [yolo_label(self.cls_idx, self.x, self.y, self.w, self.h, img_size)]
+        labels = [ui_label(self.cls_idx, self.x, self.y, self.w, self.h, img_size)]
         for child in self.children:
             labels.extend(child.label(img_size))
         return labels
