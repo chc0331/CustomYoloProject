@@ -6,6 +6,8 @@ from dataset.canvas.component.ui_component_base import UIComponentBase, random_c
 class IconComponent(UIComponentBase):
     def __init__(self):
         super().__init__(2, "Icon")
+        self.type_id = 1
+
 
     def draw(self, img):
         color = random_color()

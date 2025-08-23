@@ -1,4 +1,5 @@
 import random
+from cProfile import label
 
 import cv2
 
@@ -17,6 +18,7 @@ class LayoutComponent(UIComponentBase):
         self.img_size = img_size
         self.max_depth = max_depth
         self.depth = depth
+        self.type_id = 0
         self.children = []
 
     def draw(self, img):
@@ -32,6 +34,9 @@ class LayoutComponent(UIComponentBase):
 
             if self.depth + 1 >= self.max_depth or random.random() < 0.4:
                 comp = random.choice([TextComponent, ButtonComponent, IconComponent])()
+                comp.depth = self.depth
+                comp.parent_id = self.comp_id
+                comp.comp_id = self.comp_id + 1
                 comp.set_bbox(zx, zy, zw, zh)
                 comp.draw(img)
                 self.children.append(comp)
@@ -39,6 +44,9 @@ class LayoutComponent(UIComponentBase):
                 layout_cls = random.randint(3, 7)
                 layout_name = CLASSES[layout_cls]
                 sublayout = LayoutComponent(layout_cls, layout_name, self.img_size, self.max_depth, self.depth + 1)
+                sublayout.depth = self.depth + 1
+                sublayout.parent_id = self.comp_id
+                sublayout.comp_id = self.comp_id + 1
                 sublayout.set_bbox(zx, zy, zw, zh)
                 sublayout.draw(img)
                 self.children.append(sublayout)
@@ -68,7 +76,12 @@ class LayoutComponent(UIComponentBase):
         return clamp_rect(x + pad_x, y + pad_y, w - 2 * pad_x, h - 2 * pad_y, self.img_size)
 
     def label(self, img_size):
-        labels = [ui_label(self.cls_idx, self.x, self.y, self.w, self.h, img_size)]
+        labels = [ui_label(self.cls_idx, self.x, self.y, self.w, self.h, img_size,
+                           self.depth, self.parent_id, self.comp_id, self.type_id)]
+        print("Before Layout label : {}".format(labels))
         for child in self.children:
-            labels.extend(child.label(img_size))
+            child_label = [child.label(img_size)]
+            print("Child label : {}".format(child_label))
+            labels.extend(child_label)
+        print("After Layout label : {}".format(labels))
         return labels

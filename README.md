@@ -40,9 +40,9 @@ ex) 1to2Horizontal에서는 2개의 컴포넌트가 1 / 2영역에 각각 들어
 # 3. depth : int (중첩 레벨, 루트=0)
 # 4. parent_id : int (상위 레이아웃 id, 최상위면 -1)
 # 5. component_id : int (컴포넌트 고유 id)
-# 6. type : str (Layout 또는 UI)
+# 6. type : int (Layout(0) 또는 UI(1) 또는 Text(2))
 # 예시)
-# 0 0.45 0.30 0.20 0.10 1 1 101 UI
+# 0(class_id), 0.45(x_center), 0.30(y_center), 0.20(width), 0.10(height), 1(depth) 1(parent_id), 101(component_id) UI (type)
 # 1 0.50 0.50 0.90 0.90 0 -1 100 Layout
 # 2 0.70 0.60 0.25 0.15 2 101 102 UI
 
