@@ -1,0 +1,62 @@
+{
+  "class_id": "6(1to1Vertical)",
+  "x_center": 0.5,
+  "y_center": 0.5,
+  "width": 1.0,
+  "height": 1.0,
+  "depth": 0,
+  "parent_id": 0,
+  "component_id": 0,
+  "type": 0,
+  "children": [
+    {
+      "class_id": "4(1to1Horizontal)",
+      "x_center": 0.5,
+      "y_center": 0.25,
+      "width": 0.941406,
+      "height": 0.5,
+      "depth": 1,
+      "parent_id": 0,
+      "component_id": 1,
+      "type": 0,
+      "children": [
+        {
+          "class_id": "0(Text)",
+          "x_center": 0.288086,
+          "y_center": 0.25,
+          "width": 0.423828,
+          "height": 0.46875,
+          "depth": 1,
+          "parent_id": 1,
+          "component_id": 2,
+          "type": 2,
+          "children": []
+        },
+        {
+          "class_id": "1(Button)",
+          "x_center": 0.711914,
+          "y_center": 0.25,
+          "width": 0.423828,
+          "height": 0.46875,
+          "depth": 1,
+          "parent_id": 1,
+          "component_id": 3,
+          "type": 1,
+          "children": []
+        }
+      ]
+    },
+    {
+      "class_id": "2(Icon)",
+      "x_center": 0.5,
+      "y_center": 0.75,
+      "width": 0.941406,
+      "height": 0.5,
+      "depth": 0,
+      "parent_id": 0,
+      "component_id": 4,
+      "type": 1,
+      "children": []
+    }
+  ]
+}

@@ -1,5 +1,4 @@
 import random
-from cProfile import label
 
 import cv2
 
@@ -21,8 +20,9 @@ class LayoutComponent(UIComponentBase):
         self.type_id = 0
         self.children = []
 
-    def draw(self, img):
+    def draw(self, img, depth, parent_id, allocator):
         # Optional: draw layout boundary
+        super().draw(img, depth, parent_id, allocator)
         cv2.rectangle(img, (self.x, self.y), (self.x + self.w, self.y + self.h), (150, 150, 150), 1)
 
         # Split and recurse or place UI
@@ -33,22 +33,18 @@ class LayoutComponent(UIComponentBase):
             zx, zy, zw, zh = clamp_rect(zx, zy, zw, zh, self.img_size)
 
             if self.depth + 1 >= self.max_depth or random.random() < 0.4:
+                # UI / Text 컴포넌트
                 comp = random.choice([TextComponent, ButtonComponent, IconComponent])()
-                comp.depth = self.depth
-                comp.parent_id = self.comp_id
-                comp.comp_id = self.comp_id + 1
                 comp.set_bbox(zx, zy, zw, zh)
-                comp.draw(img)
+                comp.draw(img, depth=self.depth, parent_id=self.comp_id, allocator=allocator)
                 self.children.append(comp)
             else:
+                # Layout 컴포넌트
                 layout_cls = random.randint(3, 7)
                 layout_name = CLASSES[layout_cls]
                 sublayout = LayoutComponent(layout_cls, layout_name, self.img_size, self.max_depth, self.depth + 1)
-                sublayout.depth = self.depth + 1
-                sublayout.parent_id = self.comp_id
-                sublayout.comp_id = self.comp_id + 1
                 sublayout.set_bbox(zx, zy, zw, zh)
-                sublayout.draw(img)
+                sublayout.draw(img, depth=self.depth + 1, parent_id=self.comp_id, allocator=allocator)
                 self.children.append(sublayout)
 
     def split_zones(self, x, y, w, h):
@@ -78,10 +74,7 @@ class LayoutComponent(UIComponentBase):
     def label(self, img_size):
         labels = [ui_label(self.cls_idx, self.x, self.y, self.w, self.h, img_size,
                            self.depth, self.parent_id, self.comp_id, self.type_id)]
-        print("Before Layout label : {}".format(labels))
         for child in self.children:
-            child_label = [child.label(img_size)]
-            print("Child label : {}".format(child_label))
+            child_label = child.label(img_size)
             labels.extend(child_label)
-        print("After Layout label : {}".format(labels))
         return labels

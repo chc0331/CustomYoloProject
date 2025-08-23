@@ -24,7 +24,6 @@ class DatasetGenerator:
             img_path = os.path.join(self.img_dir, f"sample_{i}.png")
             label_path = os.path.join(self.label_dir, f"sample_{i}.txt")
             image, labels = canvas.draw()
-            print("Finally label : {}".format(labels))
             cv2.imwrite(img_path, image)
             with open(label_path, "w") as f:
                 f.write("\n".join(labels))

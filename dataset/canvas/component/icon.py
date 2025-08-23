@@ -9,7 +9,8 @@ class IconComponent(UIComponentBase):
         self.type_id = 1
 
 
-    def draw(self, img):
+    def draw(self, img, depth, parent_id, allocator):
+        super().draw(img, depth, parent_id, allocator)
         color = random_color()
         side = min(self.w, self.h)
         cx = self.x + (self.w - side) // 2

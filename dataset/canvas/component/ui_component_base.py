@@ -13,6 +13,18 @@ CLASSES = {
     7: "1to2Vertical"
 }
 
+# utils.py
+class CompIdAllocator:
+    def __init__(self):
+        self._current_id = 0
+
+    def get_next_id(self):
+        """
+        Returns the next unique comp_id within this tree.
+        """
+        comp_id = self._current_id
+        self._current_id += 1
+        return comp_id
 
 # =========================
 # 🔷 공통 유틸 함수
@@ -66,9 +78,11 @@ class UIComponentBase:
     def set_bbox(self, x, y, w, h):
         self.x, self.y, self.w, self.h = x, y, w, h
 
-    def draw(self, img):
-        raise NotImplementedError
+    def draw(self, img, depth, parent_id, allocator):
+        self.depth = depth
+        self.parent_id = parent_id
+        self.comp_id = allocator.get_next_id()
 
     def label(self, img_size):
-        return ui_label(self.cls_idx, self.x, self.y, self.w, self.h, img_size,
-                        self.depth, self.parent_id, self.comp_id, self.type_id)
+        return [ui_label(self.cls_idx, self.x, self.y, self.w, self.h, img_size,
+                         self.depth, self.parent_id, self.comp_id, self.type_id)]

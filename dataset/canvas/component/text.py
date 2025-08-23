@@ -8,7 +8,8 @@ class TextComponent(UIComponentBase):
         super().__init__(0, "Text")
         self.type_id = 2
 
-    def draw(self, img):
+    def draw(self, img, depth, parent_id, allocator):
+        super().draw(img, depth, parent_id, allocator)
         color = random_color()
         cv2.rectangle(img, (self.x, self.y), (self.x + self.w, self.y + self.h), color, -1)
         center_text(img, self.cls_name, self.x, self.y, self.w, self.h, font_scale=0.3)

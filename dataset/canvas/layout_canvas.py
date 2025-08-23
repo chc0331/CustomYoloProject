@@ -1,10 +1,9 @@
 import random
 
-import cv2
 import numpy as np
 
 from dataset.canvas.component.layout import LayoutComponent
-from dataset.canvas.component.ui_component_base import CLASSES
+from dataset.canvas.component.ui_component_base import CLASSES, CompIdAllocator
 
 
 # =========================
@@ -23,8 +22,10 @@ class LayoutCanvas:
         layout_cls = random.randint(3, 7)
         layout_name = CLASSES[layout_cls]
         layout = LayoutComponent(layout_cls, layout_name, self.img_size, self.max_layout_depth, depth=0)
+        layout.type_id = 0
         layout.set_bbox(0, 0, self.img_size, self.img_size)
-        layout.draw(img)
+        allocator = CompIdAllocator()
+        layout.draw(img, depth=0, parent_id=0, allocator=allocator)
 
         label_lines.extend(layout.label(self.img_size))
         return img, label_lines

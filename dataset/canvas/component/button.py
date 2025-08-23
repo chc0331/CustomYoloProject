@@ -8,8 +8,8 @@ class ButtonComponent(UIComponentBase):
         super().__init__(1, "Button")
         self.type_id = 1
 
-
-    def draw(self, img):
+    def draw(self, img, depth, parent_id, allocator):
+        super().draw(img, depth, parent_id, allocator)
         color = random_color()
         side = min(self.w, self.h)
         cx = self.x + (self.w - side) // 2
@@ -17,7 +17,6 @@ class ButtonComponent(UIComponentBase):
         radius = side // 2
         self.draw_rounded_rectangle(img, radius, color)
         center_text(img, self.cls_name, cx, cy, side, side, font_scale=0.3)
-
 
     def draw_rounded_rectangle(self, img, radius, color):
         """
