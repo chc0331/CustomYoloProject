@@ -1,0 +1,7 @@
+train: C:\Users\admin\PycharmProjects\YoloExample\sample_dataset\train
+val: C:\Users\admin\PycharmProjects\YoloExample\sample_dataset\val
+
+nc: 8
+
+names: [ "Text","Button","Icon","FullLayout","1to1Horizontal","1to2Horizontal",
+         "1to1Vertical","1to2Vertical" ]

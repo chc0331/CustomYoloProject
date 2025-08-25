@@ -52,7 +52,8 @@ def ui_label(cls_idx, x, y, w, h, img_size, depth, parent_id, comp_id, type_id):
     yc = (y + h / 2) / img_size
     nw = w / img_size
     nh = h / img_size
-    label_text = f"{cls_idx} {xc:.6f} {yc:.6f} {nw:.6f} {nh:.6f} {depth} {parent_id} {comp_id} {type_id}"
+    # label_text = f"{cls_idx} {xc:.6f} {yc:.6f} {nw:.6f} {nh:.6f} {depth} {parent_id} {comp_id} {type_id}"
+    label_text = f"{cls_idx} {xc:.6f} {yc:.6f} {nw:.6f} {nh:.6f}"
     # print("Label : {}".format(label_text))
     return label_text
 

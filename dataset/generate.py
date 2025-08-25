@@ -6,12 +6,13 @@ from dataset.canvas.layout_canvas import LayoutCanvas
 
 
 class DatasetGenerator:
-    def __init__(self, base_path="../sample_dataset", dataset_count=5):
+    def __init__(self, base_path="../sample_dataset", dataset_count=5, mode="train"):
         self.dataset_count = dataset_count
         self.base_path = base_path
         # 경로 설정
-        self.img_dir = os.path.join(base_path, "images")
-        self.label_dir = os.path.join(base_path, "labels")
+        folder_name =  "train" if mode == "train" else "val"
+        self.img_dir = os.path.join(base_path, folder_name, "images")
+        self.label_dir = os.path.join(base_path, folder_name,"labels")
         os.makedirs(self.img_dir, exist_ok=True)
         os.makedirs(self.label_dir, exist_ok=True)
 
@@ -34,5 +35,7 @@ class DatasetGenerator:
 # 실행 예제
 # ----------------------------
 if __name__ == "__main__":
-    generator = DatasetGenerator(dataset_count=5)
-    generator.generate_dataset()
+    train_dataset_generator = DatasetGenerator(dataset_count=100, mode='train')
+    train_dataset_generator.generate_dataset()
+    valid_dataset_generator = DatasetGenerator(dataset_count=10, mode="valid")
+    valid_dataset_generator.generate_dataset()
