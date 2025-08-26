@@ -1,6 +1,9 @@
-import cv2
+import random
 
-from dataset.canvas.component.ui_component_base import UIComponentBase, random_color, center_text
+import cv2
+import numpy as np
+
+from dataset.canvas.component.ui_component_base import UIComponentBase, random_color, center_text, CompIdAllocator
 
 
 class ButtonComponent(UIComponentBase):
@@ -14,9 +17,23 @@ class ButtonComponent(UIComponentBase):
         side = min(self.w, self.h)
         cx = self.x + (self.w - side) // 2
         cy = self.y + (self.h - side) // 2
-        radius = side // 2
-        self.draw_rounded_rectangle(img, radius, color)
+        self.style = random.randint(1, 4)
+        if self.style <= 2:
+            radius = side // 2
+            self.draw_rounded_rectangle(img, radius, color)
+        elif self.style == 3:
+            self.draw_filled(img)
+        else:
+            self.draw_outline(img)
         center_text(img, self.cls_name, cx, cy, side, side, font_scale=0.3)
+
+    def draw_filled(self, img):
+        color = random_color()
+        cv2.rectangle(img, (self.x, self.y), (self.x + self.w, self.y + self.h), color, -1)
+
+    def draw_outline(self, img):
+        color = random_color()
+        cv2.rectangle(img, (self.x, self.y), (self.x + self.w, self.y + self.h), color, 2)
 
     def draw_rounded_rectangle(self, img, radius, color):
         """
@@ -43,3 +60,20 @@ class ButtonComponent(UIComponentBase):
         cv2.circle(img, (x + w - radius, y + radius), radius, color, -1)  # 우상
         cv2.circle(img, (x + radius, y + h - radius), radius, color, -1)  # 좌하
         cv2.circle(img, (x + w - radius, y + h - radius), radius, color, -1)
+
+
+if __name__ == "__main__":
+    # 흰색 배경 생성
+    img = np.ones((500, 500, 3), dtype=np.uint8) * 255
+
+    # 버튼 생성 후 그림
+    # btn = ButtonComponent(style="filled")
+    # btn = ButtonComponent(style="rounded")
+    btn = ButtonComponent()
+    btn.set_bbox(150, 200, 200, 80)
+    btn.draw(img, depth=0, parent_id=0, allocator=CompIdAllocator())
+
+    # 결과 출력
+    cv2.imshow("Button Demo", img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
